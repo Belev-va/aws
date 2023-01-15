@@ -47,7 +47,8 @@ resource "aws_subnet" "aws-subnet-private_1" {
  cidr_block = "10.0.3.0/24"
  vpc_id            = "${aws_vpc.main.id}"
  availability_zone = "eu-central-1a"
- 
+  map_public_ip_on_launch = "true"
+
  tags = {
     Name            = "how_light_private_1"
   }
@@ -57,7 +58,8 @@ resource "aws_subnet" "aws-subnet-private_1" {
  cidr_block = "10.0.4.0/24"
  vpc_id            = "${aws_vpc.main.id}"
  availability_zone = "eu-central-1b"
- 
+   map_public_ip_on_launch = "true"
+
  tags = {
     Name            = "how_light_private_2"
   }
