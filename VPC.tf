@@ -62,4 +62,11 @@ resource "aws_subnet" "aws-subnet-private_1" {
     Name            = "how_light_private_2"
   }
  }
- 
+
+# Add AWS internet gateway
+resource "aws_internet_gateway" "how_light_internet_gateway" {
+  vpc_id = "${aws_vpc.main.id}"
+  tags = {
+    Name            = "internet-gateway"
+  }
+}
