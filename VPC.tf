@@ -11,6 +11,7 @@ provider "aws" {
   region = "eu-central-1"
 }
 
+# Create VPC
 resource "aws_vpc" "main" {
  cidr_block = "10.0.0.0/16"
  
@@ -77,7 +78,6 @@ resource "aws_network_acl" "acl-private" {
   vpc_id     = aws_vpc.main.id
   subnet_ids = [aws_subnet.aws-subnet-private_1.id, aws_subnet.aws-subnet-private_2.id]
 
-
   ingress {
     cidr_block = "0.0.0.0/0"
     action    = "Deny"
@@ -85,9 +85,7 @@ resource "aws_network_acl" "acl-private" {
     to_port     = 0
     protocol    = "-1"
     rule_no   = 200
-
   }
-
   egress {
     cidr_block = "0.0.0.0/0"
     action    = "Allow"
@@ -95,12 +93,52 @@ resource "aws_network_acl" "acl-private" {
     to_port     = 0
     protocol    = "-1"
     rule_no   = 200
-
   }
-
-
 
   tags = {
     Name = "acl-private"
   }
+}
+
+# Add variable
+#variable "allowed_ports" {
+#  description = "Allowed ports from/to host"
+#  type        = list
+#  default     = ["80", "443", "8080", "8443", "8000"]
+#}
+
+# Create security group
+resource "aws_security_group" "howlight-web-sg" {
+  name                = "web_sg"
+  description         = "Security Group for VPC"
+  vpc_id              = aws_vpc.main.id
+
+  tags = {
+    Name            = "howlight-web_sg"
+  }
+
+  # allow traffic for ssh on port 22
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "tcp"
+    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32"]
+  }
+
+  # allow egress traffic
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+
 }
