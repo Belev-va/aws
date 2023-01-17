@@ -72,3 +72,35 @@ resource "aws_internet_gateway" "how_light_internet_gateway" {
     Name            = "internet-gateway"
   }
 }
+
+resource "aws_network_acl" "acl-private" {
+  vpc_id     = aws_vpc.main.id
+  subnet_ids = [aws_subnet.aws-subnet-private_1.id, aws_subnet.aws-subnet-private_2.id]
+
+
+  ingress {
+    cidr_block = "0.0.0.0/0"
+    action    = "Deny"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    rule_no   = 200
+
+  }
+
+  egress {
+    cidr_block = "0.0.0.0/0"
+    action    = "Allow"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    rule_no   = 200
+
+  }
+
+
+
+  tags = {
+    Name = "acl-private"
+  }
+}
