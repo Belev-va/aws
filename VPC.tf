@@ -147,3 +147,31 @@ resource "aws_security_group" "howlight-web-sg" {
   }
 }
 
+resource "aws_security_group" "test" {
+  name                = "test"
+  description         = "Security Group for VPC"
+  vpc_id              = aws_vpc.main.id
+
+  tags = {
+    Name            = "test"
+  }
+
+  # allow traffic for ssh on port 22
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # allow egress traffic
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+
+  }
+  }
+
+
+
