@@ -131,6 +131,12 @@ resource "aws_security_group" "howlight-web-sg" {
     protocol    = "tcp"
     cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32"]
   }
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
  
   # allow egress traffic 
   egress {
