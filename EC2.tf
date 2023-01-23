@@ -19,9 +19,10 @@ resource "aws_instance" "linux_minimal_2" {
   subnet_id              = "${aws_subnet.aws-subnet-public_2.id}"
   vpc_security_group_ids = [aws_security_group.test.id]
   user_data = <<EOF
-#!/bin/bash
-sudo apt update
-sudo apt install nginx
+##!/bin/bash
+sudo apt update -y &&
+sudo apt install -y nginx
+echo "Hello World" > /var/www/html/index.html
 EOF
 
 }
