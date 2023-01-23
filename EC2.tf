@@ -18,6 +18,7 @@ resource "aws_instance" "linux_minimal_2" {
   instance_type          = "t2.micro"
   subnet_id              = "${aws_subnet.aws-subnet-public_2.id}"
   vpc_security_group_ids = [aws_security_group.test.id]
+  key_name = "${aws_key_pair.deployer}"
   user_data = <<EOF
 ##!/bin/bash
 sudo apt update -y &&
