@@ -4,11 +4,13 @@ resource "aws_instance" "linux_minimal" {
   instance_type          = "t2.micro"
   #vpc_security_group_ids = [aws_security_group.howlight-web-sg.id]
   #subnet_id              = "${aws_subnet.aws-subnet-public_1.id}"
-  vpc_security_group_ids = "sg-0acacc6c7ee0c9754"
+  vpc_security_group_ids = [aws_security_group.test.id]
   key_name = "deployer-key"
   user_data = <<EOF
 #!/bin/bash
 sudo apt update
+firewall-cmd --permanent --add-port=80/tcp
+firewall-cmd --reload
 sudo apt install nginx
 sudo systemctl start nginx
 EOF
@@ -18,7 +20,7 @@ resource "aws_instance" "test" {
   ami                    = "ami-0a261c0e5f51090b1"
   instance_type          = "t2.micro"
   #subnet_id              = "${aws_subnet.aws-subnet-public_2.id}"
-  vpc_security_group_ids = "sg-0acacc6c7ee0c9754"
+  vpc_security_group_ids = [aws_security_group.test.id]
 
   key_name = "deployer-key"
   user_data = <<EOF
