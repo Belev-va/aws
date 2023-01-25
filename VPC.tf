@@ -150,7 +150,7 @@ resource "aws_security_group" "howlight-web-sg" {
 resource "aws_security_group" "test" {
   name                = "test"
   description         = "Security Group for VPC"
-  vpc_id              = aws_vpc.main.id
+
 
   tags = {
     Name            = "test"
