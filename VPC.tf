@@ -11,8 +11,10 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-resource "aws_vpc" "main" {
- cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "how_light" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
  
  tags = {
    Name = "HowLight"
@@ -20,10 +22,9 @@ resource "aws_vpc" "main" {
 }
 
  # Add AWS public subnet
- 
  resource "aws_subnet" "aws-subnet-public_1" {
  cidr_block = "10.0.1.0/24"
- vpc_id            = "${aws_vpc.main.id}"
+ vpc_id            = "${aws_vpc.how_light.id}"
  availability_zone = "eu-central-1a"
  map_public_ip_on_launch = "true"
  
@@ -34,7 +35,7 @@ resource "aws_vpc" "main" {
  
  resource "aws_subnet" "aws-subnet-public_2" {
  cidr_block = "10.0.2.0/24"
- vpc_id            = "${aws_vpc.main.id}"
+ vpc_id            = "${aws_vpc.how_light.id}"
  availability_zone = "eu-central-1b"
  map_public_ip_on_launch = "true"
  
@@ -44,10 +45,9 @@ resource "aws_vpc" "main" {
  }
  
  # Add AWS private subnet
- 
 resource "aws_subnet" "aws-subnet-private_1" {
  cidr_block = "10.0.3.0/24"
- vpc_id            = "${aws_vpc.main.id}"
+ vpc_id            = "${aws_vpc.how_light.id}"
  availability_zone = "eu-central-1a"
  
  tags = {
@@ -57,7 +57,7 @@ resource "aws_subnet" "aws-subnet-private_1" {
  
  resource "aws_subnet" "aws-subnet-private_2" {
  cidr_block = "10.0.4.0/24"
- vpc_id            = "${aws_vpc.main.id}"
+ vpc_id            = "${aws_vpc.how_light.id}"
  availability_zone = "eu-central-1b"
  
  tags = {
@@ -67,14 +67,14 @@ resource "aws_subnet" "aws-subnet-private_1" {
  
  # Add AWS internet gateway
  resource "aws_internet_gateway" "how_light_internet_gateway" {
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = "${aws_vpc.how_light.id}"
     tags = {
-        Name            = "internet-gateway"
+        Name            = "how_light_ig"
     }
 }
 
 resource "aws_network_acl" "acl-private" {
-  vpc_id     = aws_vpc.main.id
+  vpc_id     = aws_vpc.how_light.id
   subnet_ids = [aws_subnet.aws-subnet-private_1.id, aws_subnet.aws-subnet-private_2.id]
   
   
@@ -85,7 +85,6 @@ resource "aws_network_acl" "acl-private" {
     to_port     = 0
     protocol    = "-1"
     rule_no   = 200
-
   }
   
   egress {
@@ -95,11 +94,10 @@ resource "aws_network_acl" "acl-private" {
     to_port     = 0
     protocol    = "-1"
     rule_no   = 200
-
   }
 
     tags = {
-      Name = "acl-private"
+      Name = "how_light_acl-private"
   }
 }
 
@@ -107,7 +105,7 @@ resource "aws_network_acl" "acl-private" {
 resource "aws_security_group" "howlight-web-sg" {
   name                = "web_sg"
   description         = "Security Group for VPC"
-  vpc_id              = aws_vpc.main.id
+  vpc_id              = aws_vpc.how_light.id
 
   tags = {
     Name            = "howlight-web_sg"
@@ -122,10 +120,10 @@ resource "aws_security_group" "howlight-web-sg" {
   }
 
   ingress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32","192.168.100.0/24"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     from_port   = 80
@@ -146,7 +144,6 @@ resource "aws_security_group" "howlight-web-sg" {
 resource "aws_security_group" "test" {
   name                = "test"
   description         = "Security Group for VPC"
-
 
   tags = {
     Name            = "test"
@@ -178,7 +175,7 @@ resource "aws_security_group" "test" {
   */
 
 resource "aws_route_table" "rt_how_light_public" {
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = "${aws_vpc.how_light.id}"
   tags = {
     Name        = "my-public-routetable"
   }
