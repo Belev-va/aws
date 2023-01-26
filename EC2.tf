@@ -20,7 +20,7 @@ EOF
 resource "aws_instance" "how_light_ec2_1" {
   ami                    = "ami-0a261c0e5f51090b1"
   instance_type          = "t2.micro"
-  subnet_id              = "${aws_subnet.aws-subnet-public_1.id}"
+  subnet_id              = "${aws_subnet.aws-subnet-public_2.id}"
   vpc_security_group_ids = ["${aws_security_group.howlight-web-sg.id}"]
   key_name               = "${aws_key_pair.deployer.key_name}"
   user_data = <<-EOF
