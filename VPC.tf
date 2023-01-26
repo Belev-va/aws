@@ -156,7 +156,7 @@ resource "aws_security_group" "test" {
     Name            = "test"
   }
 
-  # allow traffic for ssh on port 22
+  # allow traffic for ssh on port 80
   ingress {
     from_port   = 80
     to_port     = 80
@@ -173,5 +173,29 @@ resource "aws_security_group" "test" {
   }
   }
 
+resource "aws_route_table" "rt_how_light_public" {
+  vpc_id = "${aws_vpc.main.id}"
+  tags = {
+    Name        = "my-public-routetable"
 
+  }
+  depends_on = ["aws_vpc.main"]
+}
+# Create a rout in the roite table, to access public via internet gateway
+resource "aws_route" "how_light_route_igw" {
+  route_table_id         = "${aws_route_table.rt_how_light_public.id}"
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = "${aws_internet_gateway.how_light_internet_gateway.id}"
+  depends_on = ["aws_internet_gateway.how_light_internet_gateway"]
+}
 
+resource "aws_route_table_association" "rt_association_public_1" {
+  subnet_id      = "${aws_subnet.aws-subnet-public_1.id}"
+  route_table_id = "${aws_route_table.rt_how_light_public.id}"
+  depends_on = ["aws_route_table.rt_how_light_public"]
+}
+resource "aws_route_table_association" "rt_association_punlic_2" {
+  subnet_id      = "${aws_subnet.aws-subnet-public_2.id}"
+  route_table_id = "${aws_route_table.rt_how_light_public.id}"
+  depends_on = ["aws_route_table.rt_how_light_public"]
+}

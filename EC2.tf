@@ -1,4 +1,4 @@
-
+/*
 resource "aws_instance" "linux_minimal" {
   ami                    = "ami-0d500797138456fbb"
   instance_type          = "t2.micro"
@@ -15,6 +15,26 @@ sudo apt install nginx
 sudo systemctl start nginx
 EOF
 }
+*/
+
+resource "aws_instance" "wordpress_a" {
+  ami                    = "ami-0a261c0e5f51090b1"
+  instance_type          = "t2.micro"
+  subnet_id              = "${aws_subnet.aws-subnet-public_1.id}"
+  vpc_security_group_ids = ["${aws_security_group.howlight-web-sg.id}"]
+  key_name               = "${aws_key_pair.deployer.key_name}"
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo yum update -y
+              sudo yum install -y httpd
+              sudo service httpd start
+              sudo echo "<html> <h1> Server A </h1> </html>" > /var/www/html/index.html
+             EOF
+  tags = {
+    Name        = "prageesha-wordpress-a"
+
+  }
+}
 
 resource "aws_instance" "test" {
   ami                    = "ami-0a261c0e5f51090b1"
@@ -23,7 +43,7 @@ resource "aws_instance" "test" {
   vpc_security_group_ids = [aws_security_group.test.id]
 
   key_name = "deployer-key"
-  user_data = <<EOF
+  user_data = <<-EOF
 #!/bin/bash
 yum -y update
 yum -y install httpd
