@@ -128,14 +128,14 @@ resource "aws_security_group" "howlight-web-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32"]
+    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32","192.168.100.18"]
   }
 
   ingress {
     from_port   = 0
     to_port     = 0
     protocol    = "tcp"
-    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32"]
+    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32","192.168.100.18"]
   }
   ingress {
     from_port   = 80
@@ -200,16 +200,16 @@ resource "aws_route" "how_light_route_igw" {
   route_table_id         = "${aws_route_table.rt_how_light_public.id}"
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.how_light_internet_gateway.id}"
-  depends_on = ["aws_internet_gateway.how_light_internet_gateway"]
+  #depends_on = ["aws_internet_gateway.how_light_internet_gateway"]
 }
 
 resource "aws_route_table_association" "rt_association_public_1" {
   subnet_id      = "${aws_subnet.aws-subnet-public_1.id}"
   route_table_id = "${aws_route_table.rt_how_light_public.id}"
-  depends_on = ["aws_route_table.rt_how_light_public"]
+  #depends_on = ["aws_route_table.rt_how_light_public"]
 }
 resource "aws_route_table_association" "rt_association_punlic_2" {
   subnet_id      = "${aws_subnet.aws-subnet-public_2.id}"
   route_table_id = "${aws_route_table.rt_how_light_public.id}"
-  depends_on = ["aws_route_table.rt_how_light_public"]
+  #depends_on = ["aws_route_table.rt_how_light_public"]
 }
