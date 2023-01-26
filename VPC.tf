@@ -107,6 +107,12 @@ resource "aws_network_acl" "acl-private" {
 
 
 
+  tags = {
+    Name = "example"
+  }
+
+
+
 # Create security group
 resource "aws_security_group" "howlight-web-sg" {
   name                = "web_sg"
@@ -172,6 +178,14 @@ resource "aws_security_group" "test" {
 
   }
   }
+/*resource "aws_route_table" "example" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "10.0.1.0/24"
+    gateway_id = aws_internet_gateway.how_light_internet_gateway.id
+  }
+  */
 
 resource "aws_route_table" "rt_how_light_public" {
   vpc_id = "${aws_vpc.main.id}"
@@ -179,7 +193,7 @@ resource "aws_route_table" "rt_how_light_public" {
     Name        = "my-public-routetable"
 
   }
-  depends_on = ["aws_vpc.main"]
+
 }
 # Create a rout in the roite table, to access public via internet gateway
 resource "aws_route" "how_light_route_igw" {
