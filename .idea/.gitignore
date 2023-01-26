@@ -1,5 +1,8 @@
 # Default ignored files
-/shelf/
+/aws.iml
+/misc.xml
+/modules.xml
+/vcs.xml
 /workspace.xml
 *.terraform*
 *.tfstate*
