@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "how_light_media_1" {
 
 }
 
-resourse aws_s3_bucket_acl "how_light_acl_bucket" {
+resource aws_s3_bucket_acl "how_light_acl_bucket" {
   acl = "public"
   bucket = aws_s3_bucket.how_light_media_1.id
 
