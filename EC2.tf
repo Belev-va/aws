@@ -30,18 +30,14 @@ resource "aws_instance" "wordpress_a" {
               sudo service httpd start
               sudo echo "<html> <h1> Server A </h1> </html>" > /var/www/html/index.html
              EOF
-  tags = {
-    Name        = "prageesha-wordpress-a"
 
-  }
 }
 
 resource "aws_instance" "test" {
   ami                    = "ami-0a261c0e5f51090b1"
   instance_type          = "t2.micro"
-  #subnet_id              = "${aws_subnet.aws-subnet-public_2.id}"
-  vpc_security_group_ids = [aws_security_group.test.id]
-
+  subnet_id              = "${aws_subnet.aws-subnet-public_1.id}"
+  vpc_security_group_ids = ["${aws_security_group.howlight-web-sg.id}"]
   key_name = "deployer-key"
   user_data = <<-EOF
 #!/bin/bash

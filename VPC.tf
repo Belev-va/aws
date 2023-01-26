@@ -191,9 +191,7 @@ resource "aws_route_table" "rt_how_light_public" {
   vpc_id = "${aws_vpc.main.id}"
   tags = {
     Name        = "my-public-routetable"
-
   }
-
 }
 # Create a rout in the roite table, to access public via internet gateway
 resource "aws_route" "how_light_route_igw" {
