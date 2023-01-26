@@ -27,7 +27,7 @@ resource "aws_iam_user" "how_light_media_user" {
 }
 
 resource "aws_iam_user_policy" "how_light_media_polisy" {
-  user = aws_iam_user.how_light_media_user
+  user = aws_iam_user.how_light_media_user.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
