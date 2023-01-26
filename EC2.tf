@@ -17,7 +17,7 @@ EOF
 }
 */
 
-resource "aws_instance" "wordpress_a" {
+resource "aws_instance" "how_light_ec2_1" {
   ami                    = "ami-0a261c0e5f51090b1"
   instance_type          = "t2.micro"
   subnet_id              = "${aws_subnet.aws-subnet-public_1.id}"
