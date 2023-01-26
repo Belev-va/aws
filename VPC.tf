@@ -97,16 +97,11 @@ resource "aws_network_acl" "acl-private" {
     rule_no   = 200
 
   }
-  
-  
 
-  tags = {
-    Name = "acl-private"
+    tags = {
+      Name = "acl-private"
   }
 }
-
-
-
 
 # Create security group
 resource "aws_security_group" "howlight-web-sg" {
@@ -123,14 +118,14 @@ resource "aws_security_group" "howlight-web-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32","192.168.100.18"]
+    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32","192.168.100.18/24"]
   }
 
   ingress {
     from_port   = 0
     to_port     = 0
     protocol    = "tcp"
-    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32","192.168.100.18"]
+    cidr_blocks = ["23.111.202.142/32", "23.111.123.20/32", "23.111.123.15/32", "23.111.123.23/32","192.168.100.18/24"]
   }
   ingress {
     from_port   = 80
