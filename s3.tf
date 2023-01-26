@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "how_light_media_1" {
-  bucket = var.how_light_media_bucket
+  bucket = var.how-light-media-bucket
 
 }
 
