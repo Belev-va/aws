@@ -2,5 +2,5 @@
 
 variable "how-light-media-bucket" {
   description = "S3 Bucket for production media files"
-  default = "how_light_prod_media_bucket"
+  default = "how-light-prod-media-bucket"
 }
