@@ -31,6 +31,7 @@ resource "aws_vpc" "how_light" {
  tags = {
     Name            = "how_light_public_1"
   }
+
  }
  
  resource "aws_subnet" "aws-subnet-public_2" {
