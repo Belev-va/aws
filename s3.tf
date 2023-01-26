@@ -22,7 +22,7 @@ resource "aws_s3_bucket_cors_configuration" "example" {
 }
 
 resource "aws_iam_user" "how_light_media_user" {
-  name = "how-light-media-bucket"
+  name = "how-light-media-user"
 
 }
 
@@ -36,10 +36,7 @@ resource "aws_iam_user_policy" "how_light_media_polisy" {
           "s3:*",
         ]
         Effect = "Allow"
-        Resource = [
-          "arn:aws:s3:::${var.how_light_media_bucket.key}",
-          "arn:aws:s3:::${var.how_light_media_bucket}/*"
-        ]
+        Resource = "*"
       },
     ]
   })
