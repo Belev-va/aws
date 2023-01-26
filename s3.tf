@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "how_light_media_1" {
 
 resource aws_s3_bucket_acl "how_light_acl_bucket" {
   bucket = aws_s3_bucket.how_light_media_1.id
-  acl    = "public-read"
+  acl    = "private"
 
 }
 
