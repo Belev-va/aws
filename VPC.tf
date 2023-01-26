@@ -107,11 +107,6 @@ resource "aws_network_acl" "acl-private" {
 
 
 
-  tags = {
-    Name = "example"
-  }
-
-
 
 # Create security group
 resource "aws_security_group" "howlight-web-sg" {
