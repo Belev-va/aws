@@ -1,4 +1,4 @@
-
+#ec2
 /*
 resource "aws_instance" "how_light_ec2_1" {
   ami                    = "ami-0a261c0e5f51090b1"
@@ -31,3 +31,4 @@ sudo service httpd start
 chkconfig httpd on
 EOF
 }
+*/
