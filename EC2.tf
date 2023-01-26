@@ -9,8 +9,8 @@ resource "aws_instance" "how_light_ec2_1" {
   user_data = <<-EOF
               #!/bin/bash
               sudo yum update -y
-              sudo yum install -y httpd
-              sudo service httpd start
+              sudo yum install -y nginx
+              sudo systemctl start nginx
               sudo echo "<html> <h1> Server A </h1> </html>" > /var/www/html/index.html
              EOF
 }
