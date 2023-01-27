@@ -1,11 +1,12 @@
 resource "aws_s3_bucket" "how_light_media_1" {
-  bucket = var.how-light-media-bucket
+  bucket    = var.how-light-media-bucket
+  subnet_id =  "${aws_subnet.aws-subnet-public_1.id}"
 
 }
 
 resource aws_s3_bucket_acl "how_light_acl_bucket" {
   bucket = aws_s3_bucket.how_light_media_1.id
-  acl    = "private"
+  acl    = "public-read"
 
 }
 
