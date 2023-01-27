@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "how_light_media_1" {
   bucket    = var.how-light-media-bucket
-  subnet_id =  "${aws_subnet.aws-subnet-public_1.id}"
+
 
 }
 
