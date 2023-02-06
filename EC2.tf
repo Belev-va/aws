@@ -1,5 +1,4 @@
-#ec2
-/*
+
 resource "aws_instance" "how_light_ec2_1" {
   ami                    = "ami-0a261c0e5f51090b1"
   instance_type          = "t2.micro"
@@ -30,5 +29,3 @@ echo "<h2>WebServer with IP: $myip</h2><br>Build by Terraform!" > /var/www/html/
 sudo service httpd start
 chkconfig httpd on
 EOF
-}
-*/
